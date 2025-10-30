@@ -84,7 +84,7 @@ with col1:
         mode=WebRtcMode.SENDRECV,
         rtc_configuration=rtc_configuration,
         media_stream_constraints={"video": True, "audio": False},
-        video_transformer_factory=DamageTransformer,
+        video_processor_factory=DamageTransformer,
         async_processing=async_mode,
     )
 with col2:
@@ -94,3 +94,4 @@ with col2:
         if ctx and ctx.video_transformer:
             info.metric("Estimated Repair Cost (AED)", f"{ctx.video_transformer.last_cost:.2f}")
         time.sleep(0.3)
+
