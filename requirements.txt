@@ -1,5 +1,3 @@
-streamlit_webrtc
-
 streamlit
 ultralytics
 opencv-python-headless
@@ -14,5 +12,4 @@ opencv-python
 av 
 ultralytics
 eventlet
-streamlit-webrtc
 streamlit-webrtc
