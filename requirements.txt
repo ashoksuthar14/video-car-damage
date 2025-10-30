@@ -4,7 +4,7 @@ opencv-python-headless
 Pillow
 torch
 torchvision
-numpy 
+ 
 aiortc 
 flask 
 flask-socketio 
@@ -13,5 +13,6 @@ av
 ultralytics
 eventlet
 streamlit-webrtc
+
 
 
