@@ -3,8 +3,8 @@ ultralytics
 opencv-python-headless
 Pillow
 torch
-torchvision==0.16.2
-numpy == 1.26.4
+torchvision
+numpy 
 aiortc 
 flask 
 flask-socketio 
@@ -13,4 +13,5 @@ av
 ultralytics
 eventlet
 streamlit-webrtc
+
 
