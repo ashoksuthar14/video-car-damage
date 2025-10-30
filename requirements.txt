@@ -2,7 +2,7 @@ streamlit
 ultralytics
 opencv-python-headless
 Pillow
-torch==2.1.2 
+torch
 torchvision==0.16.2
 numpy == 1.26.4
 aiortc 
@@ -13,3 +13,4 @@ av
 ultralytics
 eventlet
 streamlit-webrtc
+
