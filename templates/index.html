@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AI Car Damage Meet</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f6f9fc 0%, #e0ebfa 100%);
+            color: #233;
+            font-family: "Inter", Arial, sans-serif;
+            margin: 0;
+        }
+        .site-header {
+            text-align: center;
+            font-size: 1.85em;
+            font-weight: 700;
+            letter-spacing: .03em;
+            background: #2246c5ef;
+            color: #fff;
+            padding: 25px 0 13px 0;
+            box-shadow: 0 2px 18px #8da2ce26;
+            border-radius: 0 0 28px 28px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 55px;
+            margin: 48px 0 36px 0;
+        }
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 6px 32px #6c789966, 0 1.5px 8px #bfcadf12;
+            padding: 38px 34px 36px 34px;
+            transition: box-shadow 0.22s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .video-box {
+            background: #f7f8fa;
+            border-radius: 17px;
+            width: 410px;
+            height: 315px;
+            box-shadow: 0 0.7px 9px #bbb5, 0 0px 0px #0000;
+            position: relative;
+            margin-bottom: 14px;
+            transition: box-shadow 0.16s;
+        }
+        .video-box video {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            object-fit: cover;
+            background: #e8eaf6;
+        }
+        .vid-label {
+            position: absolute;
+            left: 17px;
+            bottom: 16px;
+            background: #1949dddf;
+            color: #fff;
+            border-radius: 7px;
+            font-size: 1.08em;
+            padding: 4px 19px;
+            letter-spacing: .03em;
+            font-weight: 460;
+            box-shadow: 0 2px 6px #0002;
+        }
+        .aibox-score {
+            position: absolute;
+            right: 22px;
+            top: 18px;
+            background:#eaf3feee;
+            color:#0d6efd;
+            font-size: 1.09em;
+            padding:5px 17px;
+            border-radius:13px;
+            font-weight:600;
+            letter-spacing:.04em;
+            box-shadow: 0 1px 8px #347ae533;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            margin: 38px 0 20px 0;
+        }
+        .btn {
+            background: #3461fd;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.12em;
+            padding: 14px 36px;
+            font-weight: 600;
+            letter-spacing: .04em;
+            box-shadow: 0 2px 9px #709bfe30;
+            cursor: pointer;
+            outline: none;
+            transition: background .14s, color .12s, transform .1s;
+        }
+        .btn:hover:not(:disabled), .btn:focus:not(:disabled) {
+            background: #1d4cb8;
+            color: #fff;
+            transform: translateY(-2px) scale(1.035);
+        }
+        .btn.end {
+            background: #e5424c;
+            color: #fff;
+        }
+        .btn.end:hover, .btn.end:focus {
+            background: #c61225;
+            color:#fff;
+        }
+        .btn:disabled {
+            background: #bdc9e0;
+            color: #8a95a7;
+            opacity: 0.75;
+            cursor: not-allowed;
+        }
+        .status-bar {
+            width:100vw; margin-top:0;
+            display: flex; align-items: center; justify-content: center; gap: 13px;
+            background: #f0f4fbde;
+            color:#2b334c; font-size:1.11em; text-align:center; font-weight:580;
+            padding: 13px 0 10px 0; letter-spacing:.05em; box-shadow:0 3.3px 16px #afbccc19;
+        }
+        .status-dot{ display:inline-block; width:14px; height:14px; border-radius:50%; margin-right:6px; background:#c5cfea; box-shadow:0 1px 4px #c4ccea77;}
+        .status-on{ background: #3bd16b;}
+        .status-off{ background: #bbb;}
+        .footer {
+            text-align:center; padding:22px 0 9px 0; color: #8ab2e2; font-size: 1em; letter-spacing:.12em;margin-bottom:3px;
+        }
+        @media (max-width:1050px) {
+            .container { flex-direction: column; gap: 24px; align-items: center; }
+        }
+        @media (max-width:620px) {
+            .site-header { font-size: 1.19em; padding: 18px 0 12px 0; border-radius:0;}
+            .container{margin-top:18px;}
+            .card{padding:16px 4vw 12px 4vw;}
+            .video-box { width: 96vw; max-width:350px; height: 42vw; max-height:206px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-header">AI Car Damage Meet</div>
+    <div id="bar" class="status-bar">
+      <span class="status-dot status-off" id="statusDot"></span>
+      <span id="barText">Call Ready</span>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="video-box" id="localBox">
+                <video id="localVideo" autoplay muted playsinline></video>
+                <div class="vid-label">You</div>
+            </div>
+            <span style="font-size:.99em;color:#6676a0;">Local video</span>
+        </div>
+        <div class="card">
+            <div class="video-box" id="remoteBox">
+                <video id="remoteVideo" autoplay playsinline></video>
+                <div class="vid-label">AI Damage Analysis</div>
+                <div class="aibox-score" id="scoreBox" style="display:none"></div>
+            </div>
+            <span style="font-size:.99em;color:#557ad8;">YOLOv8 processed</span>
+        </div>
+    </div>
+    <div class="controls">
+        <button id="startBtn" class="btn">Start Call</button>
+        <button id="endBtn" class="btn end">End Call</button>
+    </div>
+    <div class="footer">Powered by <b>YOLOv8</b> + <b>WebRTC/aiortc</b> &mdash; 2024</div>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+        var localVideo = document.getElementById('localVideo');
+        var remoteVideo = document.getElementById('remoteVideo');
+        var startBtn = document.getElementById('startBtn');
+        var endBtn = document.getElementById('endBtn');
+        var statusBar = document.getElementById('bar');
+        var statusDot = document.getElementById('statusDot');
+        var barText = document.getElementById('barText');
+        var scoreBox = document.getElementById('scoreBox');
+        var socket = io('/signal');
+        var pc; var stream;
+
+        function setCallActive(on) {
+          if(on) {
+            startBtn.disabled = true; endBtn.disabled = false;
+            barText.textContent = "Live Call (AI Processing)";
+            statusDot.className = "status-dot status-on";
+            document.title = "AI Car Damage Meet - Connected";
+          } else {
+            startBtn.disabled = false; endBtn.disabled = true;
+            barText.textContent = "Call Ended";
+            statusDot.className = "status-dot status-off";
+            document.title = "AI Car Damage Meet";
+          }
+        }
+
+        setCallActive(false);
+        let callActive = false;
+
+        startBtn.onclick = async function() {
+            pc = new RTCPeerConnection();
+            const constraints = { video: { width: {ideal: 1280}, height: {ideal: 720}, frameRate: {ideal: 30} }, audio: false };
+            try {
+              stream = await navigator.mediaDevices.getUserMedia(constraints);
+            } catch(e) {
+              stream = await navigator.mediaDevices.getUserMedia({video:true,audio:false});
+            }
+            localVideo.srcObject = stream;
+            stream.getTracks().forEach(track => pc.addTrack(track, stream));
+            pc.ontrack = function(event) {
+                // Ensure we always attach the track even if streams[] is empty
+                if (event.streams && event.streams[0]) {
+                  remoteVideo.srcObject = event.streams[0];
+                } else {
+                  remoteVideo.srcObject = new MediaStream([event.track]);
+                }
+            };
+            pc.oniceconnectionstatechange = () => {
+              if (pc.iceConnectionState === 'failed' || pc.iceConnectionState === 'disconnected') {
+                setCallActive(false);
+              }
+            };
+            pc.onicecandidate = ({candidate}) => {
+                if (candidate) socket.emit('candidate', candidate);
+            };
+
+            let offer = await pc.createOffer();
+            await pc.setLocalDescription(offer);
+            socket.emit('offer', {type: 'offer', sdp: offer.sdp});
+            barText.textContent = "Calling..."; callActive=true; setCallActive(true);
+        };
+        socket.on('answer', async msg => {
+            if (msg && msg.type === 'answer') {
+                await pc.setRemoteDescription(new RTCSessionDescription(msg));
+                barText.textContent = "Call Connected! Processing Video In Real Time...";
+                statusDot.className = "status-dot status-on";
+            }
+        });
+        // (Optional) ICE candidate support for full WebRTC comp.
+        // socket.on('candidate', c => pc.addIceCandidate(new RTCIceCandidate(c)));
+
+        endBtn.onclick = function() {
+            setCallActive(false); callActive = false;
+            if (pc) { pc.close(); pc = null; }
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                localVideo.srcObject = null; stream=null;
+            }
+            if (remoteVideo.srcObject) remoteVideo.srcObject = null;
+            barText.textContent = "Call Ended";
+            statusDot.className = "status-dot status-off";
+            socket.emit('bye');
+            scoreBox.style.display = 'none';
+        };
+        // Show processed cost if server overlays it (get from server in a real app!)
+        remoteVideo.addEventListener('play', function() {
+            scoreBox.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
