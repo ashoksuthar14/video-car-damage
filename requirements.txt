@@ -1,0 +1,18 @@
+streamlit_webrtc
+
+streamlit
+ultralytics
+opencv-python-headless
+Pillow
+torch==2.1.2 
+torchvision==0.16.2
+numpy == 1.26.4
+aiortc 
+flask 
+flask-socketio 
+opencv-python 
+av 
+ultralytics
+eventlet
+streamlit-webrtc
+streamlit-webrtc
